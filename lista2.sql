@@ -167,9 +167,12 @@ LIMIT 1;
 
 -- zadanie 16 --
 
-SELECT staff_id, payment_date, SUM(amount)
+SELECT staff_id, SUM(amount)
 FROM payment
-GROUP BY staff_id HAVING payment_date BETWEEN '2005-07-01' AND '2005-08-31';
+WHERE payment_date BETWEEN '2005-07-01' AND '2005-08-31'
+GROUP BY staff_id
+ORDER BY SUM(amount) DESC
+LIMIT 1;
 
 -- zadanie 17 --
 
