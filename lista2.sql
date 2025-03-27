@@ -98,11 +98,20 @@ FROM rental
 WHERE inventory_id IN(
     SELECT inventory_id
     FROM inventory
-    WHERE film_id = 182);
+    WHERE film_id = 182)
+AND return_date IS NOT NULL;
 
 SELECT DISTINCT store_id
 FROM inventory
-WHERE film_id = 182;
+WHERE inventory_id IN(
+    SELECT inventory_id
+    FROM rental
+    WHERE inventory_id IN(
+        SELECT inventory_id
+        FROM inventory
+        WHERE film_id = 182)
+    AND return_date IS NOT NULL
+);
 
 -- zadanie 11 --
 SELECT first_name, last_name
@@ -113,7 +122,19 @@ WHERE customer_id IN(
     WHERE inventory_id IN(
         SELECT inventory_id
         FROM inventory
-        WHERE film_id = 182));
+        WHERE film_id = 182)
+    AND return_date IS NOT NULL);
+
+SELECT first_name, last_name
+FROM customer
+WHERE customer_id IN(
+    SELECT customer_id
+    FROM rental
+    WHERE inventory_id IN(
+        SELECT inventory_id
+        FROM inventory
+        WHERE film_id = 182)
+    AND return_date IS NULL);
 
 -- zadanie 12 --
 
@@ -125,7 +146,8 @@ WHERE customer_id IN(
     WHERE inventory_id IN(
         SELECT inventory_id
         FROM inventory
-        WHERE film_id = 182))
+        WHERE film_id = 182)
+    AND return_date IS NOT NULL)
 AND active =1;
 
 -- zadanie 13 -- 
@@ -140,7 +162,8 @@ WHERE address_id IN(
         WHERE inventory_id IN(
             SELECT inventory_id
             FROM inventory
-            WHERE film_id = 182))
+            WHERE film_id = 182)
+        AND return_date IS NOT NULL)
     AND active =1);
 
 -- zadanie 14 --
