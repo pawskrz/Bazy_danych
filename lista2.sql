@@ -144,31 +144,67 @@ WHERE address_id IN(
     AND active =1);
 
 -- zadanie 14 --
-SELECT actor_id
-FROM actor
-WHERE first_name LIKE '%PENELOPE%';
-
-SELECT COUNT(*)
+SELECT actor_id, COUNT(film_id) AS licz
 FROM film_actor
-WHERE actor_id =1;
+GROUP BY actor_id HAVING actor_id IN(
+    SELECT actor_id
+    FROM actor
+    WHERE first_name LIKE '%PENELOPE%')
+ORDER BY licz DESC
+LIMIT 1;
 
-SELECT COUNT(*)
-FROM film_actor
-WHERE actor_id =54;
-
-SELECT COUNT(*)
-FROM film_actor
-WHERE actor_id =104 ;
-
-SELECT COUNT(*)
-FROM film_actor
-WHERE actor_id =120;
-
-SELECT first_name
+SELECT last_name
 FROM actor
 WHERE actor_id = 104;
 
 -- zadanie 15 --
 
-SELECT *
+SELECT staff_id, SUM(amount)
 FROM payment
+GROUP BY staff_id
+ORDER BY SUM(amount) DESC
+LIMIT 1;
+
+-- zadanie 16 --
+
+SELECT staff_id, payment_date, SUM(amount)
+FROM payment
+GROUP BY staff_id HAVING payment_date BETWEEN '2005-07-01' AND '2005-08-31';
+
+-- zadanie 17 --
+
+SELECT COUNT(DISTINCT email)
+FROM customer
+WHERE email NOT LIKE '%sakilacustomer.org%';
+
+-- zadanie 18 --
+
+SELECT COUNT(customer_id), store_id
+FROM customer
+WHERE active=1
+GROUP BY store_id;
+
+-- zadanie 19 --
+
+SELECT COUNT(rental_date)- COUNT(return_date) AS ile, staff_id
+FROM rental
+GROUP BY staff_id;
+
+-- zadanie 20 --
+
+SELECT customer_id, rental_date
+FROM rental
+WHERE return_date IS NULL
+ORDER BY rental_date ASC
+LIMIT 1;
+
+SELECT phone
+FROM address
+WHERE address_id IN(
+    SELECT address_id
+    FROM customer
+    WHERE customer_id = 554
+);
+
+SELECT staff_id
+FROM rental;
