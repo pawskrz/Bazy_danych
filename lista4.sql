@@ -31,3 +31,17 @@ SELECT MAX(DATEDIFF(return_date, rental_date)) AS 'najdłużej',
 MIN(DATEDIFF(return_date, rental_date)) AS 'najkrócej'
 FROM rental
 WHERE return_date IS NOT NULL;
+
+-- zadanie 7 --
+SELECT customer_id, AVG(DATEDIFF(return_date, rental_date))
+FROM rental
+GROUP BY customer_id
+ORDER BY AVG(DATEDIFF(return_date, rental_date)) DESC
+LIMIT 1;
+
+-- zadanie 8 --
+SELECT customer_id, SUM(DATEDIFF(return_date, rental_date))
+FROM rental
+GROUP BY customer_id
+ORDER BY SUM(DATEDIFF(return_date, rental_date)) DESC
+LIMIT 1;
