@@ -10,6 +10,17 @@ FROM Orders
 GROUP BY CustomerID HAVING COUNT(OrderID) > 20;
 
 -- zadanie 3 --
-SELECT COUNT(ProductID)
+SELECT CONCAT(ROUND(COUNT(*) * 100/SUM(COUNT(*)) OVER ()), "%") AS "Procent"
 FROM Products
-WHERE UnitsOnOrder=0 AND UnitsInStock=0 AND ReorderLevel=0
+GROUP BY UnitsOnOrder, UnitsInStock, ReorderLevel
+ORDER BY UnitsOnOrder, UnitsInStock, ReorderLevel
+LIMIT 1;
+
+-- rozwiązanie nie jest dobre, gdy nie ma żadnych produktów poza sprzedaża --
+
+-- zadanie 4 --
+SELECT COUNT(ContactName) * COUNT(*) * 100/SUM(COUNT(*)) OVER(PARTITION BY)
+FROM Customers
+WHERE ContactName LIKE "%a %"
+GROUP BY Country;
+
