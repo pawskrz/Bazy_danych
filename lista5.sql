@@ -19,8 +19,12 @@ LIMIT 1;
 -- rozwiązanie nie jest dobre, gdy nie ma żadnych produktów poza sprzedaża --
 
 -- zadanie 4 --
-SELECT COUNT(ContactName) * COUNT(*) * 100/SUM(COUNT(*)) OVER(PARTITION BY)
+SELECT COUNT(ContactName), Country, COUNT(ContactName) * 100/SUM(COUNT(ContactName)) OVER (PARTITION BY ContactName LIKE "%a %" ORDER BY ContactName CURRENT ROW)
 FROM Customers
-WHERE ContactName LIKE "%a %"
 GROUP BY Country;
 
+
+SELECT COUNT(ContactName), Country
+FROM Customers
+WHERE ContactName LIKE"%a %"
+GROUP BY Country;
